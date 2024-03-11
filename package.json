@@ -1,0 +1,11 @@
+{
+  "name": "ipem",
+  "version": "1.0.0",
+  "description": "information porttal for employees and managers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Makhmutov M.N.",
+  "license": "ISC"
+}
