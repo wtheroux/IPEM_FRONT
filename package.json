@@ -6,21 +6,10 @@
   "scripts": {
     "lint": "eslint --debug services/",
     "lint:write": "eslint --debug services/ --fix",
-    "prettier": "prettier --write services/**/*.ts|.tsx"
+    "prepare": "husky"
   },
   "author": "Makhmutov M.N.",
   "license": "ISC",
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint:write"
-    }
-  },
-  "lint-staged": {
-    "*.(ts|tsx)": [
-      "npm run lint:write",
-      "git add"
-    ]
-  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
