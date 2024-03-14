@@ -77,7 +77,7 @@ module.exports = {
       name: 'remoteModulesEmployeeInfo',
       filename: 'remoteEntry.js',
       exposes: {
-        './Info': './src/App.tsx',
+        './Info': './src/app',
       },
       shared: {
         react: {
