@@ -77,7 +77,7 @@ module.exports = {
       name: 'remoteModulesEmployeeTimeOff',
       filename: 'remoteEntry.js',
       exposes: {
-        './TimeOff': './src/App.tsx',
+        './TimeOff': './src/app',
       },
       shared: {
         react: {
