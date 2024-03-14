@@ -7,7 +7,7 @@ module.exports = {
       "plugin:react-hooks/recommended",
       "plugin:prettier/recommended",
     ],
-    ignorePatterns: ["build", ".eslintrc.js", 'node_modules', 'prettier.config.js', 'webpack.config.js'],
+    ignorePatterns: ["build", ".eslintrc.js", 'node_modules', 'prettier.config.js', 'webpack.config.js', 'jest.config.cjs', 'babel.config.cjs'],
     parser: "@typescript-eslint/parser",
     parserOptions: { ecmaVersion: "latest", sourceType: "module" },
     plugins: ["react-hooks", "react", "prettier"],
