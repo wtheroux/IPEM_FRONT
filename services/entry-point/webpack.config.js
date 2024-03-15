@@ -83,9 +83,9 @@ module.exports = {
           : 'remoteModulesEmployeeVacation@http://localhost:3001/remoteEntry.js'
       },
       shared: {
-        react: {
+        'react': {
           singleton: true,
-          requiredVersion: deps.react,
+          requiredVersion: deps['react'],
         },
         'react-dom': {
           singleton: true,
