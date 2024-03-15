@@ -1,19 +1,6 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-const Info = React.lazy(() => import('remote-modules-employee-info/Info'))
-const TimeOff = React.lazy(() => import('remote-modules-employee-time-off/TimeOff'))
-const Vacantion = React.lazy(() => import('remote-modules-employee-vacation/Vacation'))
+import { Pages } from './router'
+import { withProviders } from './providers'
 
-const App = () => (
-  <Router>
-    <Routes>
-      <Route path='/' element={<div>Hello</div>} />
-      <Route path='/info/*' element={<Info />} />
-      <Route path='/time-off/*' element={<TimeOff />} />
-      <Route path='/vacation/*' element={<Vacantion />} />
-    </Routes>
-  </Router>
-)
-const root = ReactDOM.createRoot(document.getElementById('root')!)
-root.render(<App />)
+const App = () => <Pages />
+
+export default withProviders(App)

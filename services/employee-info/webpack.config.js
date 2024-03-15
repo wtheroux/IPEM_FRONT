@@ -80,8 +80,8 @@ module.exports = {
         './Info': './src/app',
       },
       shared: {
-        react: {
-          requiredVersion: deps.react,
+        'react': {
+          requiredVersion: deps['react'],
           singleton: true,
         },
         'react-dom': {

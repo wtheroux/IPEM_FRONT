@@ -1,8 +1,6 @@
-import ReactDOM from 'react-dom/client'
+import { Pages } from './router'
+import { withProviders } from './providers'
 
-const App = () => <div>Hello time-off</div>
+const App = () => <Pages />
 
-const root = ReactDOM.createRoot(document.getElementById('root')!)
-root.render(<App />)
-
-export default App
+export default withProviders(App)
