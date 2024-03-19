@@ -92,6 +92,10 @@ module.exports = {
           singleton: true,
           requiredVersion: deps['react-redux'],
         },
+        'ipem-shared': {
+          singleton: true,
+          requiredVersion: deps['ipem-shared']
+        }
       },
     }),
   ],
