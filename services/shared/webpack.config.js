@@ -1,15 +1,8 @@
 const path = require('path');
-const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-const deps = require('./package.json').dependencies;
 
 module.exports = {
-  entry: './src/index.js',
-  devServer: {
-    port: 3003,
-    historyApiFallback: true,
-  },
+  mode: 'production',
+  entry: './src/index.ts',
   module: {
     rules: [
       {
@@ -53,9 +46,8 @@ module.exports = {
             options: {
               modules: {
                 localIdentName: '[name]__[local]___[hash:base64:5]',
-                // Add other module options here if needed
               },
-              sourceMap: true, // Add this if you want source maps
+              sourceMap: true,
             },
           },
           'sass-loader',
@@ -66,41 +58,13 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
     alias: {
-      '@modules/info': path.join(__dirname, './src'),
+      '@modules/shared': path.join(__dirname, './src'),
     },
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'index.html'),
-    }),
-    new ModuleFederationPlugin({
-      name: 'remoteModulesEmployeeInfo',
-      filename: 'remoteEntry.js',
-      exposes: {
-        './Info': './src/app',
-      },
-      shared: {
-        'react': {
-          requiredVersion: deps['react'],
-          singleton: true,
-        },
-        'react-dom': {
-          requiredVersion: deps['react-dom'],
-          singleton: true,
-        },
-        'react-redux': {
-          singleton: true,
-          requiredVersion: deps['react-redux'],
-        },
-        'ipem-shared': {
-          singleton: true,
-          requiredVersion: deps['ipem-shared']
-        }
-      },
-    }),
-  ],
   output: {
-    filename: '[name].js',
+    filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
+    libraryTarget: "umd",
+    clean: true
   },
 };
