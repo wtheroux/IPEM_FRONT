@@ -112,10 +112,10 @@ export const Calendar: React.FC<CalendarProps> = ({
                     if (day.dayNumber === '-') {
                       return <div>{day.dayNumber}</div>
                     }
-                    //@ts-ignore
-                    const isToday = checkIsToday(day.date)
-                    //@ts-ignore
-                    const isSelectedDay = checkDateIsEqual(day.date, state.selectedDay.date)
+                    // //@ts-ignore
+                    // const isToday = checkIsToday(day.date)
+                    // //@ts-ignore
+                    // const isSelectedDay = checkDateIsEqual(day.date, state.selectedDay.date)
 
                     const isAdditionalDay = day.monthIndex !== index
 
@@ -124,10 +124,10 @@ export const Calendar: React.FC<CalendarProps> = ({
                         key={`${day.dayNumber}-${day.monthIndex}`}
                         aria-hidden
                         onClick={() => {
-                          //@ts-ignore
-                          functions.setSelectedDay(day)
-                          //@ts-ignores
-                          selectDate(day.date)
+                          // //@ts-ignore
+                          // functions.setSelectedDay(day)
+                          // //@ts-ignores
+                          // selectDate(day.date)
                         }}
                         className={[
                           styles.calendar__day,
