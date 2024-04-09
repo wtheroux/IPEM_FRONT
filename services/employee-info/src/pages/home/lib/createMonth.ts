@@ -3,17 +3,15 @@ import { getMonthNumberOfDays } from './getMonthNumberOfDays'
 
 interface CreateMonthParams {
   date?: Date
-  locale?: string
 }
 
 export const createMonth = (params?: CreateMonthParams) => {
   const date = params?.date ?? new Date()
-  const locale = params?.locale ?? 'default'
 
-  const d = createDate({ date, locale })
+  const d = createDate({ date })
   const { month: monthName, year, monthNumber, monthIndex } = d
 
-  const getDay = (dayNumber: number) => createDate({ date: new Date(year, monthIndex, dayNumber), locale })
+  const getDay = (dayNumber: number) => createDate({ date: new Date(year, monthIndex, dayNumber) })
 
   const createMonthDays = () => {
     const days = []

@@ -1,76 +1,39 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
-import { getMonthesNames, createMonth, getWeekDaysNames, getMonthNumberOfDays, createDate } from '../lib'
+import {
+  getMonthesNames,
+  createMonth,
+  getWeekDaysNames,
+  getMonthNumberOfDays,
+  createDate,
+  getDaysOfMonth
+} from '../lib'
 
 interface UseCalendarParams {
-  locale?: string
   selectedDate: Date
-  firstWeekDayNumber?: number
 }
 
-const DAYS_IN_WEEK = 7
-
-export const useCalendar = ({ locale = 'default', selectedDate: date, firstWeekDayNumber = 2 }: UseCalendarParams) => {
-  const [mode, setMode] = useState<'days' | 'monthes' | 'years'>('days')
+export const useCalendar = ({ selectedDate: date }: UseCalendarParams) => {
+  const [mode, setMode] = useState<'month' | 'years'>('month')
   const [selectedDay, setSelectedDay] = useState(createDate({ date }))
   const [selectedMonth, setSelectedMonth] = useState(
-    createMonth({ date: new Date(selectedDay.year, selectedDay.monthIndex), locale })
+    createMonth({ date: new Date(selectedDay.year, selectedDay.monthIndex) })
   )
   const [selectedYear, setSelectedYear] = useState(selectedDay.year)
 
-  const monthesNames = useMemo(() => getMonthesNames(locale), [])
-  const weekDaysNames = useMemo(() => getWeekDaysNames(firstWeekDayNumber, locale), [])
-
-  const days = useMemo(() => selectedMonth.createMonthDays(), [selectedMonth, selectedYear])
+  const monthesNames = useMemo(() => getMonthesNames(), [])
+  const weekDaysNames = useMemo(() => getWeekDaysNames(), [])
 
   const calendarDays = useMemo(() => {
-    const monthNumberOfDays = getMonthNumberOfDays(selectedMonth.monthIndex, selectedYear)
+    if (mode === 'month') {
+      const monthNumberOfDays = getMonthNumberOfDays(selectedMonth.monthIndex, selectedYear)
 
-    const prevMonthDays = createMonth({
-      date: new Date(selectedYear, selectedMonth.monthIndex - 1),
-      locale
-    }).createMonthDays()
-
-    const nextMonthDays = createMonth({
-      date: new Date(selectedYear, selectedMonth.monthIndex + 1),
-      locale
-    }).createMonthDays()
-
-    console.log(prevMonthDays)
-
-    const firstDay = days[0]
-    const lastDay = days[monthNumberOfDays - 1]
-
-    const shiftIndex = firstWeekDayNumber - 1
-    const numberOfPrevDays =
-      firstDay.dayNumberInWeek - 1 - shiftIndex < 0
-        ? DAYS_IN_WEEK - (firstWeekDayNumber - firstDay.dayNumberInWeek)
-        : firstDay.dayNumberInWeek - 1 - shiftIndex
-
-    const numberOfNextDays =
-      DAYS_IN_WEEK - lastDay.dayNumberInWeek + shiftIndex > 6
-        ? DAYS_IN_WEEK - lastDay.dayNumberInWeek - (DAYS_IN_WEEK - shiftIndex)
-        : DAYS_IN_WEEK - lastDay.dayNumberInWeek + shiftIndex
-
-    const totalCalendarDays = days.length + numberOfPrevDays + numberOfNextDays
-
-    const result = []
-
-    for (let i = 0; i < numberOfPrevDays; i += 1) {
-      const inverted = numberOfPrevDays - i
-      result[i] = prevMonthDays[prevMonthDays.length - inverted]
+      const days = selectedMonth.createMonthDays()
+      return getDaysOfMonth(days, monthNumberOfDays)
+    } else {
+      return []
     }
-
-    for (let i = numberOfPrevDays; i < totalCalendarDays - numberOfNextDays; i += 1) {
-      result[i] = days[i - numberOfPrevDays]
-    }
-
-    for (let i = totalCalendarDays - numberOfNextDays; i < totalCalendarDays; i += 1) {
-      result[i] = nextMonthDays[i - totalCalendarDays + numberOfNextDays]
-    }
-
-    return result
-  }, [selectedMonth.year, selectedMonth.monthIndex, selectedYear])
+  }, [mode, selectedMonth, selectedYear])
 
   const yearCalendarDays = useMemo(() => {
     if (mode === 'years') {
@@ -79,69 +42,10 @@ export const useCalendar = ({ locale = 'default', selectedDate: date, firstWeekD
         const monthNumberOfDays = getMonthNumberOfDays(i, selectedYear)
 
         const days = createMonth({
-          date: new Date(selectedYear, i),
-          locale
+          date: new Date(selectedYear, i)
         }).createMonthDays()
 
-        const firstDay = days[0]
-        const lastDay = days[monthNumberOfDays - 1]
-
-        const shiftIndex = firstWeekDayNumber - 1
-        const numberOfPrevDays =
-          firstDay.dayNumberInWeek - 1 - shiftIndex < 0
-            ? DAYS_IN_WEEK - (firstWeekDayNumber - firstDay.dayNumberInWeek)
-            : firstDay.dayNumberInWeek - 1 - shiftIndex
-
-        const numberOfNextDays =
-          DAYS_IN_WEEK - lastDay.dayNumberInWeek + shiftIndex > 6
-            ? DAYS_IN_WEEK - lastDay.dayNumberInWeek - (DAYS_IN_WEEK - shiftIndex)
-            : DAYS_IN_WEEK - lastDay.dayNumberInWeek + shiftIndex
-
-        const totalCalendarDays = days.length + numberOfPrevDays + numberOfNextDays
-
-        const resultMounth = []
-
-        for (let i = 0; i < numberOfPrevDays; i += 1) {
-          resultMounth[i] = {
-            date: null,
-            day: '-',
-            dayNumber: '-',
-            dayNumberInWeek: '-',
-            dayShort: '-',
-            month: '-',
-            monthIndex: '-',
-            monthNumber: '-',
-            monthShort: '-',
-            timestamp: '-',
-            week: '-',
-            year: '-',
-            yearShort: '-'
-          }
-        }
-
-        for (let i = numberOfPrevDays; i < totalCalendarDays - numberOfNextDays; i += 1) {
-          resultMounth[i] = days[i - numberOfPrevDays]
-        }
-
-        for (let i = totalCalendarDays - numberOfNextDays; i < totalCalendarDays; i += 1) {
-          resultMounth[i] = {
-            date: null,
-            day: '-',
-            dayNumber: '-',
-            dayNumberInWeek: '-',
-            dayShort: '-',
-            month: '-',
-            monthIndex: '-',
-            monthNumber: '-',
-            monthShort: '-',
-            timestamp: '-',
-            week: '-',
-            year: '-',
-            yearShort: '-'
-          }
-        }
-        result.push(resultMounth)
-        console.log(resultMounth)
+        result.push(getDaysOfMonth(days, monthNumberOfDays))
       }
       return result
     } else {
@@ -149,35 +53,38 @@ export const useCalendar = ({ locale = 'default', selectedDate: date, firstWeekD
     }
   }, [mode, selectedYear])
 
-  const onClickArrow = (direction: 'right' | 'left') => {
-    if (mode === 'years' && direction === 'left') {
-      return setSelectedYear(selectedYear - 1)
-    }
-
-    if (mode === 'years' && direction === 'right') {
-      return setSelectedYear(selectedYear + 1)
-    }
-
-    if (mode === 'days') {
-      const monthIndex = direction === 'left' ? selectedMonth.monthIndex - 1 : selectedMonth.monthIndex + 1
-      if (monthIndex === -1) {
-        const year = selectedYear - 1
-        setSelectedYear(year)
-        return setSelectedMonth(createMonth({ date: new Date(selectedYear - 1, 11), locale }))
+  const onClickArrow = useCallback(
+    (direction: 'right' | 'left') => {
+      if (mode === 'years' && direction === 'left') {
+        return setSelectedYear(selectedYear - 1)
       }
 
-      if (monthIndex === 12) {
-        const year = selectedYear + 1
-        setSelectedYear(year)
-        return setSelectedMonth(createMonth({ date: new Date(year, 0), locale }))
+      if (mode === 'years' && direction === 'right') {
+        return setSelectedYear(selectedYear + 1)
       }
 
-      setSelectedMonth(createMonth({ date: new Date(selectedYear, monthIndex), locale }))
-    }
-  }
+      if (mode === 'month') {
+        const monthIndex = direction === 'left' ? selectedMonth.monthIndex - 1 : selectedMonth.monthIndex + 1
+        if (monthIndex === -1) {
+          const year = selectedYear - 1
+          setSelectedYear(year)
+          return setSelectedMonth(createMonth({ date: new Date(selectedYear - 1, 11) }))
+        }
+
+        if (monthIndex === 12) {
+          const year = selectedYear + 1
+          setSelectedYear(year)
+          return setSelectedMonth(createMonth({ date: new Date(year, 0) }))
+        }
+
+        setSelectedMonth(createMonth({ date: new Date(selectedYear, monthIndex) }))
+      }
+    },
+    [mode, selectedMonth.monthIndex, selectedYear]
+  )
 
   const setSelectedMonthByIndex = (monthIndex: number) => {
-    setSelectedMonth(createMonth({ date: new Date(selectedYear, monthIndex), locale }))
+    setSelectedMonth(createMonth({ date: new Date(selectedYear, monthIndex) }))
   }
 
   return {

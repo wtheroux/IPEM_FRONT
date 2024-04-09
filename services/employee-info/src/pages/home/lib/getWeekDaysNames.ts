@@ -1,6 +1,6 @@
 import { createDate } from './createDate'
 
-export const getWeekDaysNames = (firstWeekDay: number = 4, locale: string = 'default') => {
+export const getWeekDaysNames = (firstWeekDay: number = 2) => {
   const weekDaysNames: {
     day: ReturnType<typeof createDate>['day']
     dayShort: ReturnType<typeof createDate>['dayShort']
@@ -10,7 +10,6 @@ export const getWeekDaysNames = (firstWeekDay: number = 4, locale: string = 'def
 
   weekDaysNames.forEach((_, i) => {
     const { day, dayNumberInWeek, dayShort } = createDate({
-      locale,
       date: new Date(date.getFullYear(), date.getMonth(), date.getDate() + i)
     })
 
