@@ -1,8 +1,6 @@
 import React from 'react'
-
-import styles from '../../styles.module.scss'
-import { checkDateIsEqual, checkIsToday } from '../../lib'
-import type { Days } from '../../lib'
+import { checkDateIsEqual, checkIsToday, type Days } from '../../lib'
+import styles from './styles.module.scss'
 
 interface CalendarMonthProps {
   weekDaysNames: {

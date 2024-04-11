@@ -1,8 +1,6 @@
 import React from 'react'
-
 import { useCalendar } from './hooks/useCalendar'
 import { CalendarHeader, CalendarMonth, CalendarYear } from './ui'
-
 import styles from './styles.module.scss'
 
 interface CalendarProps {

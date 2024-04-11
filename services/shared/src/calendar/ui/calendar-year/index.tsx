@@ -1,8 +1,6 @@
 import React from 'react'
-
-import styles from '../../styles.module.scss'
-import { checkDateIsEqual, checkIsToday } from '../../lib'
-import type { Days } from '../../lib'
+import { checkDateIsEqual, checkIsToday, type Days } from '../../lib'
+import styles from './styles.module.scss'
 
 interface CalendarYearProps {
   weekDaysNames: {
@@ -31,7 +29,7 @@ export const CalendarYear: React.FC<CalendarYearProps> = ({
   setSelectedMonthByIndex,
   setMode
 }) => (
-  <div className={styles.calendar__pick__items__container}>
+  <div className={styles.calendar__year__wrapper}>
     {yearCalendarDays.map((month, index) => (
       <div className={styles.calendar__mounth__wrapper} key={'wrapper-' + index}>
         <div className={styles.calendar__week__names}>
