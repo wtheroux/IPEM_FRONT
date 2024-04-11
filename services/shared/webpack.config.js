@@ -61,6 +61,9 @@ module.exports = {
       '@modules/shared': path.join(__dirname, './src'),
     },
   },
+  externals: {
+    react: 'react'
+  },
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build'),

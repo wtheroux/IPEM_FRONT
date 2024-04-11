@@ -5,8 +5,6 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
 const deps = require('./package.json').dependencies;
 const isProduction = false;
 
-console.log(process.env.PRODACTION_MODE, 'process.env.PRODACTION_MODE');
-
 module.exports = {
   entry: './src/index.js',
   devServer: {
