@@ -1,6 +1,6 @@
 {
   "name": "ipem-shared",
-  "version": "1.0.15",
+  "version": "1.0.23",
   "description": "init",
   "main": "./build/index.js",
   "scripts": {

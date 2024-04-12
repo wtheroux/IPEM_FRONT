@@ -33,9 +33,9 @@ module.exports = {
       {
         test: /\.(png|gif|jpg|svg)$/,
         loader: 'url-loader',
-        issuer: {
-          not: [/\.module\.scss$/],
-        },
+        // issuer: {
+        //   not: [/\.module\.scss$/],
+        // },
       },
       {
         test: /\.module\.scss$/,

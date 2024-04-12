@@ -16,15 +16,14 @@
             height: 15px;
             margin: 5px;
             cursor: pointer;
-            background-image: var(--images-arrow);
         }
-    }
-      .calendar__header__arrow__right {
-        width: 10px;
-        height: 15px;
-        margin: 5px;
-        cursor: pointer;
-        background-image: var(--images-arrow);
-        transform: rotate(-180deg);
+        .calendar__header__arrow__right {
+            width: 10px;
+            height: 15px;
+            margin: 5px;
+            cursor: pointer;
+            background-image: url('../images/arrow.svg');
+            transform: rotate(-180deg);
+        }
     }
 }

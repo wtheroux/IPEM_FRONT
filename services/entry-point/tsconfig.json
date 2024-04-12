@@ -4,6 +4,11 @@
     "src", 
     "remote-modules-decl.d.ts"   
   ],
-  
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@entry-point/*": ["*"]
+    }
+  }
 }
   
